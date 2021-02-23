@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperliminalPracticeMod", "SuperliminalPracticeMod.csproj", "{B9E7CCF8-762D-463C-82C7-114CE88FB066}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9E7CCF8-762D-463C-82C7-114CE88FB066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E7CCF8-762D-463C-82C7-114CE88FB066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E7CCF8-762D-463C-82C7-114CE88FB066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E7CCF8-762D-463C-82C7-114CE88FB066}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E4A6F9E8-86DA-4549-AA2F-2C151CDE7892}
+	EndGlobalSection
+EndGlobal
