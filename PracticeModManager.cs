@@ -49,6 +49,7 @@ namespace SuperliminalPracticeMod
 			storedMap = -1;
 			GameManager.GM.enableDebugFunctions = true;
 			debugFunctions = false;
+			GameManager.GM.GetComponent<LevelInformation>().LevelInfo.RandomLoadingScreens = new SceneReference[1] { GameManager.GM.GetComponent<LevelInformation>().LevelInfo.NormalLoadingScreen };
 
 		}
 
@@ -58,16 +59,15 @@ namespace SuperliminalPracticeMod
 		void Update()
 		{
 
-			
-			if (Input.GetKeyDown(KeyCode.K))
+			if (Input.GetKeyDown(KeyCode.F12))
 			{
-				noClip = !noClip;
-				noClipSpeed = 10.0f;
+				Transform performanceGraph = GameManager.GM.transform.Find("[Graphy]");
+				if (performanceGraph != null)
+					performanceGraph.gameObject.SetActive(!performanceGraph.gameObject.activeSelf);
 			}
 
 			if (GameManager.GM.player == null)
 				return;
-
 
 			if (player != GameManager.GM.player)
 			{
@@ -104,7 +104,13 @@ namespace SuperliminalPracticeMod
 				GameManager.GM.enableDebugFunctions = debugFunctions;
 			}
 
-			
+
+			if (Input.GetKeyDown(KeyCode.K))
+			{
+				noClip = !noClip;
+				noClipSpeed = 10.0f;
+			}
+
 			playerMotor.enabled = !noClip;
 
 			if (Input.GetKeyDown(KeyCode.F))
