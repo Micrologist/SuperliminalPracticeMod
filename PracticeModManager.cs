@@ -22,6 +22,7 @@ namespace SuperliminalPracticeMod
 		public Camera playerCamera;
 		public Text playerText;
 
+
 		Vector3 storedPosition;
 		Quaternion storedRotation;
 		float storedScale;
@@ -30,6 +31,7 @@ namespace SuperliminalPracticeMod
 		float teleportTime;
 		bool unlimitedRenderDistance;
 		bool debugFunctions;
+
 
 		void Awake()
 		{
@@ -48,16 +50,18 @@ namespace SuperliminalPracticeMod
 
 		}
 
+
+
+
 		void Update()
 		{
 
-
-		if (Input.GetKeyDown(KeyCode.K))
+			
+			if (Input.GetKeyDown(KeyCode.K))
 			{
 				noClip = !noClip;
 				noClipSpeed = 10.0f;
 			}
-
 
 			if (GameManager.GM.player == null)
 				return;
@@ -134,6 +138,29 @@ namespace SuperliminalPracticeMod
 			{
 				playerText.text = GetPlayerTextString();
 			}
+
+			if (Input.GetKey(KeyCode.F1))
+			{
+				float newScale = playerMotor.transform.localScale.x + Time.deltaTime * playerMotor.transform.localScale.x;
+				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
+				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+			}
+			
+			if (Input.GetKey(KeyCode.F2))
+			{
+				float newScale = playerMotor.transform.localScale.x - Time.deltaTime * playerMotor.transform.localScale.x;
+				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
+				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+			}
+
+			if (Input.GetKeyDown(KeyCode.F3))
+			{
+				playerMotor.transform.localScale = Vector3.one;
+				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+			}
+
+
+
 
 			if (Input.GetKeyDown(KeyCode.F4) && !noClip)
 				unlimitedRenderDistance = !unlimitedRenderDistance;
