@@ -29,6 +29,7 @@ namespace SuperliminalPracticeMod
 		float storeTime;
 		float teleportTime;
 		bool unlimitedRenderDistance;
+		bool debugFunctions;
 
 		void Awake()
 		{
@@ -42,6 +43,9 @@ namespace SuperliminalPracticeMod
 			storedRotation = Quaternion.identity;
 			storedScale = 1.0f;
 			storedMap = -1;
+			GameManager.GM.enableDebugFunctions = true;
+			debugFunctions = false;
+
 		}
 
 		void Update()
@@ -54,8 +58,10 @@ namespace SuperliminalPracticeMod
 				noClipSpeed = 10.0f;
 			}
 
+
 			if (GameManager.GM.player == null)
 				return;
+
 
 			if (player != GameManager.GM.player)
 			{
@@ -82,6 +88,7 @@ namespace SuperliminalPracticeMod
 				{
 					playerText = NewPlayerText();
 				}
+				GameManager.GM.enableDebugFunctions = debugFunctions;
 			}
 
 			
@@ -142,6 +149,12 @@ namespace SuperliminalPracticeMod
 
 			if (Input.GetKeyDown(KeyCode.F8))
 				RestartMap();
+
+			if(Input.GetKeyDown(KeyCode.F9))
+			{
+				debugFunctions = !debugFunctions;
+				GameManager.GM.enableDebugFunctions = debugFunctions;
+			}
 		}
 
 
@@ -178,6 +191,9 @@ namespace SuperliminalPracticeMod
 			Vector3 rotation = playerMotor.transform.localRotation.eulerAngles;
 			float scale = playerMotor.transform.localScale.x;
 			string dynamicInfo = "";
+
+			if (debugFunctions)
+				dynamicInfo += "\nDebug Functions";
 
 			if (noClip)
 				dynamicInfo += "\nNoClip";
