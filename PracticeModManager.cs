@@ -23,6 +23,7 @@ namespace SuperliminalPracticeMod
 		public ResizeScript resizeScript;
 		public Text playerText;
 		public Text grabbedObejctText;
+		public PauseMenu pauseMenu;
 
 
 		Vector3 storedPosition;
@@ -51,6 +52,8 @@ namespace SuperliminalPracticeMod
 			debugFunctions = false;
 			GameManager.GM.GetComponent<LevelInformation>().LevelInfo.RandomLoadingScreens = new SceneReference[1] { GameManager.GM.GetComponent<LevelInformation>().LevelInfo.NormalLoadingScreen };
 
+			base.gameObject.AddComponent<SLPMod_Console>();
+
 		}
 
 
@@ -58,6 +61,8 @@ namespace SuperliminalPracticeMod
 
 		void Update()
 		{
+			if (Input.GetKeyDown(KeyCode.F11))
+				SLPMod_Console.instance.Toggle();
 
 			if (Input.GetKeyDown(KeyCode.F12))
 			{
@@ -65,6 +70,8 @@ namespace SuperliminalPracticeMod
 				if (performanceGraph != null)
 					performanceGraph.gameObject.SetActive(!performanceGraph.gameObject.activeSelf);
 			}
+
+			GameManager.GM.enableDebugFunctions = debugFunctions;
 
 			if (GameManager.GM.player == null)
 				return;
@@ -75,6 +82,7 @@ namespace SuperliminalPracticeMod
 				playerMotor = player.GetComponent<CharacterMotor>();
 				playerCamera = player.GetComponentInChildren<Camera>();
 				resizeScript = playerCamera.GetComponent<ResizeScript>();
+				pauseMenu = GameObject.Find("UI_PAUSE_MENU").GetComponentInChildren<PauseMenu>(true);
 				defaultFarClipPlane = playerCamera.farClipPlane;
 				if(player.transform.Find("Flashlight") == null)
 				{
@@ -101,7 +109,7 @@ namespace SuperliminalPracticeMod
 					grabbedObejctText = NewGrabbedObjectText();
 				}
 
-				GameManager.GM.enableDebugFunctions = debugFunctions;
+				SLPMod_Console.instance.active = false;
 			}
 
 
@@ -210,7 +218,9 @@ namespace SuperliminalPracticeMod
 			Text newText;
 			GameObject gameObject = new GameObject("PlayerText");
 			gameObject.transform.parent = GameObject.Find("UI_PAUSE_MENU").transform.Find("Canvas");
-			gameObject.AddComponent<CanvasGroup>().interactable = false;
+			CanvasGroup cg = gameObject.AddComponent<CanvasGroup>();
+			cg.interactable = false;
+			cg.blocksRaycasts = false;
 			newText = gameObject.AddComponent<Text>();
 			RectTransform component = newText.GetComponent<RectTransform>();
 			component.sizeDelta = new Vector2((float)(Screen.currentResolution.width / 3), (float)(Screen.currentResolution.height / 3));
@@ -236,7 +246,9 @@ namespace SuperliminalPracticeMod
 			Text newText;
 			GameObject gameObject = new GameObject("GrabbedObjectText");
 			gameObject.transform.parent = GameObject.Find("UI_PAUSE_MENU").transform.Find("Canvas");
-			gameObject.AddComponent<CanvasGroup>().interactable = false;
+			CanvasGroup cg = gameObject.AddComponent<CanvasGroup>();
+			cg.interactable = false;
+			cg.blocksRaycasts = false;
 			newText = gameObject.AddComponent<Text>();
 			RectTransform component = newText.GetComponent<RectTransform>();
 			component.sizeDelta = new Vector2((float)(Screen.currentResolution.width / 3), (float)(Screen.currentResolution.height / 3));
@@ -360,6 +372,20 @@ namespace SuperliminalPracticeMod
 		{
 			GameManager.GM.TriggerScenePreUnload();
 			GameManager.GM.GetComponent<SaveAndCheckpointManager>().RestartLevel();
+		}
+
+		public void Teleport(Vector3 position)
+		{
+			if (GameManager.GM.player == null)
+				return;
+
+			playerMotor.transform.position = position;
+		}
+
+		public void Scale(float newScale)
+		{
+			if(GameManager.GM.player != null && newScale > 0.0001f)
+				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
 		}
 
 	}
