@@ -20,7 +20,9 @@ namespace SuperliminalPracticeMod
 		public GameObject flashLight;
 		public CharacterMotor playerMotor;
 		public Camera playerCamera;
+		public ResizeScript resizeScript;
 		public Text playerText;
+		public Text grabbedObejctText;
 
 
 		Vector3 storedPosition;
@@ -72,6 +74,7 @@ namespace SuperliminalPracticeMod
 				player = GameManager.GM.player;
 				playerMotor = player.GetComponent<CharacterMotor>();
 				playerCamera = player.GetComponentInChildren<Camera>();
+				resizeScript = playerCamera.GetComponent<ResizeScript>();
 				defaultFarClipPlane = playerCamera.farClipPlane;
 				if(player.transform.Find("Flashlight") == null)
 				{
@@ -92,6 +95,12 @@ namespace SuperliminalPracticeMod
 				{
 					playerText = NewPlayerText();
 				}
+
+				if (GameObject.Find("GrabbedObjectText") == null && GameObject.Find("UI_PAUSE_MENU") != null)
+				{
+					grabbedObejctText = NewGrabbedObjectText();
+				}
+
 				GameManager.GM.enableDebugFunctions = debugFunctions;
 			}
 
@@ -137,6 +146,11 @@ namespace SuperliminalPracticeMod
 			if(playerText != null)
 			{
 				playerText.text = GetPlayerTextString();
+			}
+
+			if(grabbedObejctText != null)
+			{
+				grabbedObejctText.text = GetGrabbedObjectTextString();
 			}
 
 			if (Input.GetKey(KeyCode.F1))
@@ -211,6 +225,34 @@ namespace SuperliminalPracticeMod
 			return newText;
 		}
 
+		Text NewGrabbedObjectText()
+		{
+			Text newText;
+			GameObject gameObject = new GameObject("GrabbedObjectText");
+			gameObject.transform.parent = GameObject.Find("UI_PAUSE_MENU").transform.Find("Canvas");
+			gameObject.AddComponent<CanvasGroup>().interactable = false;
+			newText = gameObject.AddComponent<Text>();
+			RectTransform component = newText.GetComponent<RectTransform>();
+			component.sizeDelta = new Vector2((float)(Screen.currentResolution.width / 3), (float)(Screen.currentResolution.height / 3));
+			component.pivot = new Vector2(0f, .5f);
+			component.anchorMin = new Vector2(0f, .5f);
+			component.anchorMax = new Vector2(0f, .5f);
+			component.anchoredPosition = new Vector2(25f, -25f);
+			foreach (Font font in Resources.FindObjectsOfTypeAll<Font>())
+			{
+				if (font.name == "BebasNeue Bold")
+				{
+					newText.font = font;
+				}
+			}
+			newText.text = "hello world";
+			newText.fontSize = 30;
+
+			return newText;
+		}
+
+
+
 		string GetPlayerTextString()
 		{
 			Vector3 position = playerMotor.transform.localPosition;
@@ -248,11 +290,9 @@ namespace SuperliminalPracticeMod
 				position.z.ToString("0.000"),
 				"\n",
 				"Rotation: ",
-				playerCamera.transform.rotation.x.ToString("0.000"),
+				playerCamera.transform.rotation.eulerAngles.x.ToString("0.000"),
 				", ",
 				rotation.y.ToString("0.000"),
-				", ",
-				rotation.z.ToString("0.000"),
 				"\n",
 				"Scale: ",
 				scale.ToString("0.0000")+"x",
@@ -265,8 +305,23 @@ namespace SuperliminalPracticeMod
 				"\n",
 				dynamicInfo
 			});
+		}
 
-
+		string GetGrabbedObjectTextString()
+		{
+			if(resizeScript.isGrabbing && resizeScript.GetGrabbedObject() != null)
+			{
+				GameObject grabbedObject = resizeScript.GetGrabbedObject();
+				return string.Concat(new object[]{
+					grabbedObject.name+"\n",
+					"Position: "+grabbedObject.transform.position.x.ToString("0.000")+", "+grabbedObject.transform.position.y.ToString("0.000")+", "+grabbedObject.transform.position.z.ToString("0.000")+"\n",
+					"Scale: "+grabbedObject.transform.localScale.x.ToString("0.0000")+"x"
+				});
+			}
+			else
+			{
+				return "";
+			}
 		}
 
 		void StorePosition()

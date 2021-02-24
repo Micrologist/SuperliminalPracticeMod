@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MelonLoader;
 using UnityEngine;
-[assembly: MelonInfo(typeof(SuperliminalPracticeMod.Main), "Superliminal Practice Mod", "0.1.2", "Micrologist#2351")]
+[assembly: MelonInfo(typeof(SuperliminalPracticeMod.Main), "Superliminal Practice Mod", "0.1.3", "Micrologist#2351")]
 [assembly: MelonGame("PillowCastle", null)]
 
 namespace SuperliminalPracticeMod
