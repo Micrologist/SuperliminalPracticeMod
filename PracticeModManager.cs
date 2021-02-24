@@ -28,12 +28,13 @@ namespace SuperliminalPracticeMod
 		int storedMap;
 		float storeTime;
 		float teleportTime;
-
+		bool unlimitedRenderDistance;
 
 		void Awake()
 		{
 			PracticeModManager.Instance = this;
 			noClip = false;
+			unlimitedRenderDistance = false;
 			noClipSpeed = 10.0f;
 			defaultFarClipPlane = 999f;
 
@@ -94,8 +95,6 @@ namespace SuperliminalPracticeMod
 
 			if (noClip)
 			{
-				playerCamera.GetComponent<CameraSettingsLayer>().enabled = false;
-				playerCamera.farClipPlane = 10000f;
 				this.noClipSpeed += Input.mouseScrollDelta.y;
 				this.noClipSpeed = Mathf.Max(0f, this.noClipSpeed);
 				Vector3 directionVector = new Vector3(GameManager.GM.playerInput.GetAxisRaw("Move Horizontal"), 0f, GameManager.GM.playerInput.GetAxisRaw("Move Vertical"));
@@ -108,16 +107,29 @@ namespace SuperliminalPracticeMod
 					directionVector.y -= 1f;
 				}
 				playerMotor.transform.Translate(directionVector.normalized * Time.deltaTime * this.noClipSpeed);
+				playerCamera.cullingMatrix = new Matrix4x4(Vector4.positiveInfinity, Vector4.positiveInfinity, Vector4.positiveInfinity, Vector4.positiveInfinity);
+			}
+			
+			if(noClip || unlimitedRenderDistance)
+			{
+				playerCamera.cullingMatrix = new Matrix4x4(Vector4.positiveInfinity, Vector4.positiveInfinity, Vector4.positiveInfinity, Vector4.positiveInfinity);
+				playerCamera.GetComponent<CameraSettingsLayer>().enabled = false;
+				playerCamera.farClipPlane = 10000f;
 			}
 			else
 			{
-				playerCamera.GetComponent<CameraSettingsLayer>().enabled = false;
+
+				playerCamera.GetComponent<CameraSettingsLayer>().enabled = true;
+				playerCamera.ResetCullingMatrix();
 			}
 
 			if(playerText != null)
 			{
 				playerText.text = GetPlayerTextString();
 			}
+
+			if (Input.GetKeyDown(KeyCode.F4) && !noClip)
+				unlimitedRenderDistance = !unlimitedRenderDistance;
 
 			if (Input.GetKeyDown(KeyCode.F5))
 				StorePosition();
@@ -132,17 +144,6 @@ namespace SuperliminalPracticeMod
 				RestartMap();
 		}
 
-		void LateUpdate()
-		{
-			if (noClip)
-			{
-				playerCamera.farClipPlane = 10000f;
-			}
-			else
-			{
-				playerCamera.farClipPlane = defaultFarClipPlane;
-			}
-		}
 
 		Text NewPlayerText()
 		{
@@ -180,6 +181,9 @@ namespace SuperliminalPracticeMod
 
 			if (noClip)
 				dynamicInfo += "\nNoClip";
+
+			if (!noClip && unlimitedRenderDistance)
+				dynamicInfo += "\nUnlimited Render Distance";
 
 			if (flashLight.activeSelf)
 				dynamicInfo += "\nFlashlight";
