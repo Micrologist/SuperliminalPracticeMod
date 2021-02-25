@@ -14,9 +14,6 @@ namespace SuperliminalPracticeMod
 	{
 		public static SLPMod_Console instance;
 		public bool active;
-		public bool setFocus;
-
-
 		string input;
 		
 
@@ -24,20 +21,13 @@ namespace SuperliminalPracticeMod
 		{
 			instance = this;
 			active = false;
-			setFocus = false;
 			input = "";
 		}
 		
 		private void OnGUI()
 		{
-
-
-
-
-			if (GameManager.GM.player != false)
+			if (GameManager.GM.player != false && PracticeModManager.Instance.pauseMenu.isInMenu == false)
 				GameManager.GM.PM.canControl = !active;
-
-
 
 			if (!active)
 				return;
@@ -58,16 +48,11 @@ namespace SuperliminalPracticeMod
 				return;
 			}
 
-
 			GUI.Box(new Rect(0, y, Screen.width, 30), "");
 			GUI.backgroundColor = new Color(0, 0, 0, 0);
 			GUI.SetNextControlName("SLP_Console");
 			input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 20f), input);
 			GUI.FocusControl("SLP_Console");
-
-
-
-
 		}
 
 		private void ParseCommand(string command)
@@ -107,7 +92,6 @@ namespace SuperliminalPracticeMod
 		public void Toggle()
 		{
 			active = !active;
-			setFocus = active;
 		}
 
 	}

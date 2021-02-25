@@ -25,7 +25,6 @@ namespace SuperliminalPracticeMod
 		public Text grabbedObejctText;
 		public PauseMenu pauseMenu;
 
-
 		Vector3 storedPosition;
 		Quaternion storedRotation;
 		float storedScale;
@@ -51,13 +50,8 @@ namespace SuperliminalPracticeMod
 			GameManager.GM.enableDebugFunctions = true;
 			debugFunctions = false;
 			GameManager.GM.GetComponent<LevelInformation>().LevelInfo.RandomLoadingScreens = new SceneReference[1] { GameManager.GM.GetComponent<LevelInformation>().LevelInfo.NormalLoadingScreen };
-
 			base.gameObject.AddComponent<SLPMod_Console>();
-
 		}
-
-
-
 
 		void Update()
 		{
@@ -112,7 +106,6 @@ namespace SuperliminalPracticeMod
 				SLPMod_Console.instance.active = false;
 			}
 
-
 			if (Input.GetKeyDown(KeyCode.K))
 			{
 				noClip = !noClip;
@@ -125,7 +118,6 @@ namespace SuperliminalPracticeMod
 			{
 				flashLight.gameObject.SetActive(!flashLight.gameObject.activeSelf);
 			}
-
 
 			if (noClip)
 			{
@@ -186,9 +178,6 @@ namespace SuperliminalPracticeMod
 				playerMotor.transform.localScale = Vector3.one;
 				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
 			}
-
-
-
 
 			if (Input.GetKeyDown(KeyCode.F4) && !noClip)
 				unlimitedRenderDistance = !unlimitedRenderDistance;
@@ -269,8 +258,6 @@ namespace SuperliminalPracticeMod
 			return newText;
 		}
 
-
-
 		string GetPlayerTextString()
 		{
 			Vector3 position = playerMotor.transform.localPosition;
@@ -296,7 +283,6 @@ namespace SuperliminalPracticeMod
 
 			if (Time.time - this.teleportTime <= 1f)
 				dynamicInfo += "\nTeleport";
-
 
 			return string.Concat(new object[]
 			{
