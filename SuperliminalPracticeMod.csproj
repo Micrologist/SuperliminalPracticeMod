@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SLPMod_Patcher.cs" />
     <Compile Include="SLPMod_Console.cs" />
     <Compile Include="PracticeModManager.cs" />
     <Compile Include="Main.cs" />

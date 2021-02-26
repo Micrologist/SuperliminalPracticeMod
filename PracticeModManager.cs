@@ -33,6 +33,8 @@ namespace SuperliminalPracticeMod
 		float teleportTime;
 		bool unlimitedRenderDistance;
 		bool debugFunctions;
+		bool triggersVisible;
+		List<GameObject> triggerGameObjects;
 
 
 		void Awake()
@@ -51,6 +53,31 @@ namespace SuperliminalPracticeMod
 			debugFunctions = false;
 			GameManager.GM.GetComponent<LevelInformation>().LevelInfo.RandomLoadingScreens = new SceneReference[1] { GameManager.GM.GetComponent<LevelInformation>().LevelInfo.NormalLoadingScreen };
 			base.gameObject.AddComponent<SLPMod_Console>();
+		}
+
+		private void OnLevelWasLoaded(int level)
+		{
+			triggerGameObjects = new List<GameObject>();
+			triggersVisible = false;
+		}
+
+		public void AddTriggerGO(GameObject go)
+		{
+			triggerGameObjects.Add(go);
+		}
+
+		public void ToggleTriggerVisibility()
+		{
+			if (GameManager.GM.player == null)
+				return;
+
+			triggersVisible = !triggersVisible;
+
+			foreach (GameObject gameObject in triggerGameObjects)
+			{
+				gameObject.SetActive(triggersVisible);
+			}
+
 		}
 
 		void Update()
@@ -268,6 +295,9 @@ namespace SuperliminalPracticeMod
 
 			if (debugFunctions)
 				dynamicInfo += "\nDebug Functions";
+
+			if (triggersVisible)
+				dynamicInfo += "\nTriggers Visible";
 
 			if (noClip)
 				dynamicInfo += "\nNoClip";

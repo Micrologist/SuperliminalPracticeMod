@@ -87,6 +87,11 @@ namespace SuperliminalPracticeMod
 			{
 				PracticeModManager.Instance.noClip = !PracticeModManager.Instance.noClip;
 			}
+			else if (commandArray[0].ToLower() == "showtriggers")
+			{
+				PracticeModManager.Instance.ToggleTriggerVisibility();
+			}
+
 		}
 
 		public void Toggle()
