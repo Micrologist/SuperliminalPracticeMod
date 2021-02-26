@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using MelonLoader;
 
 namespace SuperliminalPracticeMod
 {
@@ -400,8 +401,11 @@ namespace SuperliminalPracticeMod
 
 		public void Scale(float newScale)
 		{
-			if(GameManager.GM.player != null && newScale > 0.0001f)
+			if (GameManager.GM.player != null && newScale > 0.0001f)
+			{
 				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
+				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+			}
 		}
 
 	}
