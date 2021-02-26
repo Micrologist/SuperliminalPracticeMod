@@ -91,6 +91,17 @@ namespace SuperliminalPracticeMod
 			{
 				PracticeModManager.Instance.ToggleTriggerVisibility();
 			}
+			else if (commandArray[0].ToLower() == "mousemin" && commandArray.Length >= 2)
+			{
+				float mouseMinY;
+				MelonLogger.Log("test");
+				if (float.TryParse(commandArray[1], out mouseMinY))
+				{
+					MelonLogger.Log(mouseMinY.ToString());
+					PracticeModManager.Instance.SetMouseMinY(mouseMinY);
+				}
+			}
+			
 
 		}
 

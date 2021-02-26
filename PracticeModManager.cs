@@ -229,6 +229,11 @@ namespace SuperliminalPracticeMod
 			}
 		}
 
+		public void SetMouseMinY(float mouseMinY)
+		{
+			if (GameManager.GM.player != null && GameManager.GM.playerCamera.GetComponent<MouseLook>() != null)
+				GameManager.GM.playerCamera.GetComponent<MouseLook>().minimumY = (mouseMinY);
+		}
 
 		Text NewPlayerText()
 		{

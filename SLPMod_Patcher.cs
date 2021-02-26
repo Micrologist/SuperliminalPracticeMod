@@ -14,7 +14,7 @@ namespace SuperliminalPracticeMod
 	{
 		public static void Patch()
 		{
-			var harmony = HarmonyInstance.Create("com.harmonypatch.test");
+			var harmony = HarmonyInstance.Create("com.superliminalpracticemod.patch");
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
 		}
 	}
@@ -25,7 +25,6 @@ namespace SuperliminalPracticeMod
 	{
 		static void Prefix(VendingMachine __instance)
 		{
-			MelonLogger.Log("VendingMachine.Start()");
 			__instance.HasInfinite = true;
 		}
 	}
@@ -40,6 +39,7 @@ namespace SuperliminalPracticeMod
 			GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			gameObject.transform.position = bounds.center;
 			gameObject.transform.localScale = bounds.extents * 2f;
+			gameObject.transform.parent = __instance.gameObject.transform;
 			gameObject.GetComponent<BoxCollider>().enabled = false;
 			MeshRenderer component = gameObject.GetComponent<MeshRenderer>();
 			component.material.shader = Shader.Find("Transparent/Diffuse");
