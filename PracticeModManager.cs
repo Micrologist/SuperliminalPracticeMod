@@ -1,13 +1,7 @@
-﻿using FMOD;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using MelonLoader;
+using UnityEngine.UI;
 
 namespace SuperliminalPracticeMod
 {
@@ -190,21 +184,18 @@ namespace SuperliminalPracticeMod
 			if (Input.GetKey(KeyCode.F1))
 			{
 				float newScale = playerMotor.transform.localScale.x + Time.deltaTime * playerMotor.transform.localScale.x;
-				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
-				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+				Scale(newScale);
 			}
 			
 			if (Input.GetKey(KeyCode.F2))
 			{
 				float newScale = playerMotor.transform.localScale.x - Time.deltaTime * playerMotor.transform.localScale.x;
-				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
-				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+				Scale(newScale);
 			}
 
 			if (Input.GetKeyDown(KeyCode.F3))
 			{
-				playerMotor.transform.localScale = Vector3.one;
-				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+				Scale(1);
 			}
 
 			if (Input.GetKeyDown(KeyCode.F4) && !noClip)
@@ -379,7 +370,7 @@ namespace SuperliminalPracticeMod
 			{
 				playerMotor.transform.position = storedPosition;
 				playerMotor.transform.rotation = storedRotation;
-				playerMotor.transform.localScale = new Vector3(storedScale, storedScale, storedScale);
+				Scale(storedScale);
 				teleportTime = Time.time;
 			}
 		}
