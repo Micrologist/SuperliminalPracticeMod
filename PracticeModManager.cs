@@ -343,11 +343,31 @@ namespace SuperliminalPracticeMod
 			if(resizeScript.isGrabbing && resizeScript.GetGrabbedObject() != null)
 			{
 				GameObject grabbedObject = resizeScript.GetGrabbedObject();
-				return string.Concat(new object[]{
+				string output = string.Concat(new object[]{
 					grabbedObject.name+"\n",
 					"Position: "+grabbedObject.transform.position.x.ToString("0.000")+", "+grabbedObject.transform.position.y.ToString("0.000")+", "+grabbedObject.transform.position.z.ToString("0.000")+"\n",
-					"Scale: "+grabbedObject.transform.localScale.x.ToString("0.0000")+"x"
+					"Scale: "+grabbedObject.transform.localScale.x.ToString("0.0000")+"x" 
 				});
+				if(grabbedObject.GetComponent<Collider>() != null)
+				{
+					Collider playerCollider = player.GetComponent<Collider>();
+					Collider objectCollider = grabbedObject.GetComponent<Collider>();
+					if(
+						Physics.ComputePenetration(playerCollider, playerCollider.transform.position, playerCollider.transform.rotation, 
+							objectCollider, objectCollider.transform.position, objectCollider.transform.rotation, 
+							out Vector3 direction, out float distance))
+					{
+						Vector3 warpPrediction = player.transform.position + direction * distance;
+						if (distance > 5)
+						{
+							output += "\nWarp Prediction: " + warpPrediction.x.ToString("0.000") + ", " + warpPrediction.y.ToString("0.000") + ", " + warpPrediction.z.ToString("0.000");
+							output += "\nWarp Distance: " + distance.ToString("0.000");
+						}
+					}
+					
+				}
+
+				return output;
 			}
 			else
 			{
