@@ -17,7 +17,7 @@ namespace SuperliminalPracticeMod
 		public Camera playerCamera;
 		public ResizeScript resizeScript;
 		public Text playerText;
-		public Text grabbedObejctText;
+		public Text grabbedObjectText;
 		public PauseMenu pauseMenu;
 
 		Vector3 storedPosition;
@@ -122,7 +122,7 @@ namespace SuperliminalPracticeMod
 
 				if (GameObject.Find("GrabbedObjectText") == null && GameObject.Find("UI_PAUSE_MENU") != null)
 				{
-					grabbedObejctText = NewGrabbedObjectText();
+					grabbedObjectText = NewGrabbedObjectText();
 				}
 
 				SLPMod_Console.instance.active = false;
@@ -176,9 +176,9 @@ namespace SuperliminalPracticeMod
 				playerText.text = GetPlayerTextString();
 			}
 
-			if(grabbedObejctText != null)
+			if(grabbedObjectText != null)
 			{
-				grabbedObejctText.text = GetGrabbedObjectTextString();
+				grabbedObjectText.text = GetGrabbedObjectTextString();
 			}
 
 			if (Input.GetKey(KeyCode.F1))
@@ -218,6 +218,14 @@ namespace SuperliminalPracticeMod
 				debugFunctions = !debugFunctions;
 				GameManager.GM.enableDebugFunctions = debugFunctions;
 			}
+
+			if(resizeScript.isGrabbing && Input.GetKey(KeyCode.LeftShift))
+			{
+				resizeScript.ScaleObject(1f + (Input.mouseScrollDelta.y * 0.05f));
+			}
+
+			
+
 		}
 
 		public void SetMouseMinY(float mouseMinY)

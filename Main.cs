@@ -7,7 +7,7 @@ using MelonLoader;
 using UnityEngine;
 using Harmony;
 
-[assembly: MelonInfo(typeof(SuperliminalPracticeMod.Main), "Superliminal Practice Mod", "0.3.5", "Micrologist#2351")]
+[assembly: MelonInfo(typeof(SuperliminalPracticeMod.Main), "Superliminal Practice Mod", "0.4.0", "Micrologist#2351")]
 [assembly: MelonGame("PillowCastle", "Superliminal")]
 [assembly: MelonGame("PillowCastle", "SuperliminalSteam")]
 [assembly: MelonGame("PillowCastle", "SuperliminalGOG")]
