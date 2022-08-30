@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MelonLoader;
-using UnityEngine;
-using Harmony;
+﻿using MelonLoader;
 
 [assembly: MelonInfo(typeof(SuperliminalPracticeMod.Main), "Superliminal Practice Mod", "0.4.2", "Micrologist#2351")]
 [assembly: MelonGame("PillowCastle", "Superliminal")]

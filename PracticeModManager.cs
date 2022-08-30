@@ -338,6 +338,8 @@ namespace SuperliminalPracticeMod
 				playerCamera.transform.rotation.eulerAngles.x.ToString("0.000"),
 				", ",
 				rotation.y.ToString("0.000"),
+				", mousey",
+				mouseLook.rotationY.ToString("0.000"),
 				"\n",
 				"Scale: ",
 				scale.ToString("0.0000")+"x",
