@@ -20,6 +20,7 @@ namespace SuperliminalPracticeMod
 		public Text grabbedObjectText;
 		public PauseMenu pauseMenu;
 		public MouseLook mouseLook;
+		public CharacterController characterController;
 
 		Vector3 storedPosition;
 		Quaternion storedCapsuleRotation;
@@ -99,6 +100,7 @@ namespace SuperliminalPracticeMod
 			{
 				player = GameManager.GM.player;
 				playerMotor = player.GetComponent<CharacterMotor>();
+				characterController = playerMotor.GetComponent<CharacterController>();
 				playerCamera = player.GetComponentInChildren<Camera>();
 				mouseLook = playerCamera.GetComponent<MouseLook>();
 				resizeScript = playerCamera.GetComponent<ResizeScript>();
