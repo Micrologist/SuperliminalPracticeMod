@@ -299,7 +299,7 @@ namespace SuperliminalPracticeMod
 		string GetPlayerTextString()
 		{
 			Vector3 position = playerMotor.transform.position;
-			Vector3 velocity = playerMotor.GetComponent<CharacterController>().velocity;
+			Vector3 velocity = characterController.velocity;
 			Vector3 rotation = playerMotor.transform.rotation.eulerAngles;
 			float scale = playerMotor.transform.localScale.x;
 			string dynamicInfo = "";
