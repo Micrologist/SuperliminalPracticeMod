@@ -20,6 +20,7 @@ namespace SuperliminalPracticeMod
 		public Text grabbedObjectText;
 		public PauseMenu pauseMenu;
 		public MouseLook mouseLook;
+		public CharacterController characterController;
 
 		Vector3 storedPosition;
 		Quaternion storedCapsuleRotation;
@@ -99,6 +100,7 @@ namespace SuperliminalPracticeMod
 			{
 				player = GameManager.GM.player;
 				playerMotor = player.GetComponent<CharacterMotor>();
+				characterController = playerMotor.GetComponent<CharacterController>();
 				playerCamera = player.GetComponentInChildren<Camera>();
 				mouseLook = playerCamera.GetComponent<MouseLook>();
 				resizeScript = playerCamera.GetComponent<ResizeScript>();
@@ -296,9 +298,9 @@ namespace SuperliminalPracticeMod
 
 		string GetPlayerTextString()
 		{
-			Vector3 position = playerMotor.transform.localPosition;
-			Vector3 velocity = playerMotor.GetComponent<CharacterController>().velocity;
-			Vector3 rotation = playerMotor.transform.localRotation.eulerAngles;
+			Vector3 position = playerMotor.transform.position;
+			Vector3 velocity = characterController.velocity;
+			Vector3 rotation = playerMotor.transform.rotation.eulerAngles;
 			float scale = playerMotor.transform.localScale.x;
 			string dynamicInfo = "";
 
