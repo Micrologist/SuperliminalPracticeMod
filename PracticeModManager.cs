@@ -436,7 +436,9 @@ namespace SuperliminalPracticeMod
 			if (GameManager.GM.player != null && newScale > 0.0001f)
 			{
 				playerMotor.transform.localScale = new Vector3(newScale, newScale, newScale);
-				GameManager.GM.player.GetComponent<PlayerResizer>().Poke();
+				PlayerResizer playerResizer = GameManager.GM.player.GetComponent<PlayerResizer>();
+				playerResizer.MultiplayerReturnToSize = newScale;
+				playerResizer.Poke();
 			}
 		}
 
